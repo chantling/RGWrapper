@@ -42,9 +42,9 @@ How to configure (Questor):
 	bot), RGWrapper.iss is unnecessary and useless to you.  It's only used to pass arguments from 
 	InnerSpace to RGWrapper.exe.  We'll say you put everything in "D:\RGWrapper\" for this example.
 
-4) Edit RGWrapper.ini to show the locations of your Eve executible (exefile.exe, not eve.exe) and 
-	your RG executible.  Notice the quotes around the example locations.  They probably need to stay 
-	there.  Also note that you're specifying the location of the executible, not the directory it's in.
+4) Edit RGWrapper.ini to show the locations of your Eve executable (exefile.exe, not eve.exe) and 
+	your RG executable.  Notice the quotes around the example locations.  They probably need to stay 
+	there.  Also note that you're specifying the location of the executable, not the directory it's in.
 
 5) Open InnerSpace's configuration tool.  Edit your Eve profile and add a Pre-startup sequence 
 	(click Pre-Startup, click Insert, click New Entry to edit.).  Name it RGWrapper or whatever.  
@@ -53,7 +53,7 @@ How to configure (Questor):
 	Runscript d:\\RGWrapper\\RGWrapper "AccountName"
 
 	Please note the double backslashes instead of single.  Note that it's RGWrapper, not RGWrapper.exe 
-	(you're calling a Lavishscript object here, not the executible file directly).  And finally, note 
+	(you're calling a Lavishscript object here, not the executable file directly).  And finally, note 
 	that you're using the account name that you used to configure RG, not your character name.
 
 	You'll need to do this for every account you use, obviously.
