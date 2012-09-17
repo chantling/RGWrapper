@@ -1,0 +1,75 @@
+RGWrapper v1.0
+
+What it is:
+-----------
+Wrapper for civan's RedGuard program (http://evegrinder.com/) which automates the character
+selection process.  Made for use with Questor, but should be usable with any other Eve bot
+or program as well, provided some way of passing a command-line argument is available.
+
+How it does it:
+---------------
+Questor: A Pre-Startup sequence is added to the InnerSpace profile which calls a LavishScript
+script when the session is first launched.  That script passes the account name to RGWrapper.exe, 
+which then waits for RG's account selection window to appear.  When that appears, it attempts to 
+select the matching account and click OK using WinForms controls.  There's little to no error 
+checking or failsafes built in, so some care in use would be recommended.  In particular, starting 
+multiple clients at the same time would likely be a very bad idea.  While the clients likely 
+wouldn't start up at the <exact> same time, there's no guarantee on the exact order they'd be 
+grabbed by RG, and this wrapper makes the assumption that there will only be one (1) RG account 
+selection screen and one (1) instance of the wrapper active at a given time.  If that's not the 
+case, bad things will likely happen.  If you run a script or a batch file to start multiple 
+instances of your bot, you want to stagger them by at *least* 10-15 seconds to be safe.
+
+Any non-InnerSpace bot would work the same without the need for the Lavishscript intermediary. 
+
+PLEASE NOTE: RG must be running before launching your Eve profile.  If RG tries to inject into
+Eve too late, it tends to crash (at least for me) in a manner in which it continues to run (or at
+least hogging the memory assigned to it) but disappears from the taskbar and must be closed with
+the task manager.  RGWrapper will attempt to run RG if it's not found, which will likely save any
+profiles run later from crashing, but will likely not save that first process.
+
+How to configure (Questor):
+---------------------------
+1) Configure RedGuard, test manual login to ensure everything is working.
+
+2) Compile RGWrapper.au3.  It is an AutoIt script, so you'll need to download the AutoIt 
+	program and compiler to do this.  You can use it uncompiled by running the AutoIt 
+	interpreter directly while passing in the script name and account name as parameters, 
+	but the command line becomes much messier.  Good luck with that.
+
+3) Place RGWrapper.exe, RGWrapper.ini, and RGWrapper.iss in a folder somewhere.  I recommend 
+	the RG folder.  If you're using something other than Questor (or another InnerSpace based 
+	bot), RGWrapper.iss is unnecessary and useless to you.  It's only used to pass arguments from 
+	InnerSpace to RGWrapper.exe.  We'll say you put everything in "D:\RGWrapper\" for this example.
+
+4) Edit RGWrapper.ini to show the locations of your Eve executible (exefile.exe, not eve.exe) and 
+	your RG executible.  Notice the quotes around the example locations.  They probably need to stay 
+	there.  Also note that you're specifying the location of the executible, not the directory it's in.
+
+5) Open InnerSpace's configuration tool.  Edit your Eve profile and add a Pre-startup sequence 
+	(click Pre-Startup, click Insert, click New Entry to edit.).  Name it RGWrapper or whatever.  
+	You'll need to add a command line like so:
+
+	Runscript d:\\RGWrapper\\RGWrapper "AccountName"
+
+	Please note the double backslashes instead of single.  Note that it's RGWrapper, not RGWrapper.exe 
+	(you're calling a Lavishscript object here, not the executible file directly).  And finally, note 
+	that you're using the account name that you used to configure RG, not your character name.
+
+	You'll need to do this for every account you use, obviously.
+
+6) Now when you start that particular profile, you should just get a momentary glimpse of RG's 
+	account selection screen and then your account should be automatically selected and Eve should 
+	start.  If not, bummer.  Check your configuration.
+
+--------------
+
+If you're using another bot or program that doesn't rely on InnerSpace, you can skip all of the above 
+	except configuring RGWrapper.ini.  Just find a way to pass your account name as a command-line 
+	argument to RGWrapper:
+
+	RGWrapper.exe AccountName
+
+	Notice the manner in which I've cleverly NOT used quotes when directly passing the account to 
+	RGWrapper.  You probably should follow suit.
+
